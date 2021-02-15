@@ -1,7 +1,6 @@
 package org.directtruststandards.timplus.cluster.routing;
 
 import org.xmpp.packet.JID;
-import org.xmpp.packet.Packet;
 
 import lombok.Data;
 
@@ -13,9 +12,18 @@ import lombok.Data;
 @Data
 public class ClusteredPacket 
 {
-	private Packet packet;
+	/**
+	 * Raw XML of the stanza
+	 */
+	private String packet;
 	
+	/**
+	 * The recipeint of the packet
+	 */
 	private JID receipient;
 	
+	/**
+	 * The cluster Node ID that the packet is destined to hit
+	 */
 	private byte[] destNode;
 }
