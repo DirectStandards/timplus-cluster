@@ -89,7 +89,7 @@ public class ClusteredCacheFactory implements CacheFactoryStrategy
 	}
 
 	@Override
-	public Cache createCache(String name) 
+	public Cache<?,?> createCache(String name) 
 	{
         // Get cache configuration from system properties or default (hardcoded) values
         long maxSize = CacheFactory.getMaxCacheSize(name);
@@ -98,7 +98,7 @@ public class ClusteredCacheFactory implements CacheFactoryStrategy
         
         // Create cache with located properties... determine if the cache should be
         // a local or remote cache
-        Cache retVal = null;
+        Cache<?,?> retVal = null;
         
         if (remoteClusteredCacheNames.contains(name))
         {
