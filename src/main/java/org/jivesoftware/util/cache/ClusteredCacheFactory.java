@@ -52,7 +52,6 @@ public class ClusteredCacheFactory implements CacheFactoryStrategy
     	remoteClusteredCacheNames = new HashSet<>();
     	remoteClusteredCacheNames.add(RoutingTableImpl.ANONYMOUS_C2S_CACHE_NAME);
     	remoteClusteredCacheNames.add(RoutingTableImpl.C2S_CACHE_NAME);
-    	remoteClusteredCacheNames.add(RoutingTableImpl.S2S_CACHE_NAME);
     	remoteClusteredCacheNames.add(RoutingTableImpl.COMPONENT_CACHE_NAME);
     	remoteClusteredCacheNames.add(RoutingTableImpl.C2S_SESSION_NAME);
     }
