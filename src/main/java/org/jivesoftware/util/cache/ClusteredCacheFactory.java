@@ -14,6 +14,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.directtruststandards.timplus.cluster.cache.DelegatedClusteredCacheFactory;
+import org.jivesoftware.openfire.SessionManager;
 import org.jivesoftware.openfire.XMPPServer;
 import org.jivesoftware.openfire.cluster.ClusterException;
 import org.jivesoftware.openfire.cluster.ClusterManager;
@@ -54,6 +55,7 @@ public class ClusteredCacheFactory implements CacheFactoryStrategy
     	remoteClusteredCacheNames.add(RoutingTableImpl.C2S_CACHE_NAME);
     	remoteClusteredCacheNames.add(RoutingTableImpl.COMPONENT_CACHE_NAME);
     	remoteClusteredCacheNames.add(RoutingTableImpl.C2S_SESSION_NAME);
+    	remoteClusteredCacheNames.add(SessionManager.C2S_INFO_CACHE_NAME);
     }
     
     @SuppressWarnings("unchecked")
