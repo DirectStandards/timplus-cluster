@@ -22,6 +22,7 @@ import org.jivesoftware.openfire.cluster.ClusterNode;
 import org.jivesoftware.openfire.cluster.ClusterNodeInfo;
 import org.jivesoftware.openfire.cluster.ClusterNodeStatus;
 import org.jivesoftware.openfire.cluster.NodeID;
+import org.jivesoftware.openfire.filetransfer.proxy.ProxyConnectionManager;
 import org.jivesoftware.openfire.spi.RoutingTableImpl;
 import org.jivesoftware.util.JiveGlobals;
 import org.slf4j.Logger;
@@ -38,6 +39,8 @@ import org.slf4j.LoggerFactory;
  */
 public class ClusteredCacheFactory implements CacheFactoryStrategy
 {
+	public static final String ROSTER_CACHE_NAME = "Roster";
+	
 	private static final Logger Log = LoggerFactory.getLogger(ClusteredCacheFactory.class);
 
 	public static String CLUSTER_DELEGATED_CACHE_FACTORY_CLASS = "cache.clustering.clustered.delegatedCacheFactoryClass";
@@ -56,6 +59,8 @@ public class ClusteredCacheFactory implements CacheFactoryStrategy
     	remoteClusteredCacheNames.add(RoutingTableImpl.COMPONENT_CACHE_NAME);
     	remoteClusteredCacheNames.add(RoutingTableImpl.C2S_SESSION_NAME);
     	remoteClusteredCacheNames.add(SessionManager.C2S_INFO_CACHE_NAME);
+    	remoteClusteredCacheNames.add(ROSTER_CACHE_NAME);   
+    	remoteClusteredCacheNames.add(ProxyConnectionManager.CLUSTER_CROSS_PROXY_MAP_CACHE_NAME);
     }
     
     @SuppressWarnings("unchecked")
