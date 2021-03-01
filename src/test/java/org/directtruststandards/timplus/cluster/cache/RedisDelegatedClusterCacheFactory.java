@@ -10,7 +10,7 @@ public class RedisDelegatedClusterCacheFactory implements DelegatedClusteredCach
 
 	@Override
 	public Cache<?,?> createCache(String name, long maxSize, long maxLifetime,
-			NodeID nodeId) 
+			NodeID nodeId, boolean nodePurgeable) 
 	{
 		return mock(RedisCache.class);
 	}

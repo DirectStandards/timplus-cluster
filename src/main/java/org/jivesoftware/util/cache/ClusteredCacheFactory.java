@@ -23,6 +23,7 @@ import org.jivesoftware.openfire.cluster.ClusterNodeInfo;
 import org.jivesoftware.openfire.cluster.ClusterNodeStatus;
 import org.jivesoftware.openfire.cluster.NodeID;
 import org.jivesoftware.openfire.filetransfer.proxy.ProxyConnectionManager;
+import org.jivesoftware.openfire.muc.spi.LocalMUCRoomManager;
 import org.jivesoftware.openfire.spi.RoutingTableImpl;
 import org.jivesoftware.util.JiveGlobals;
 import org.slf4j.Logger;
@@ -61,6 +62,7 @@ public class ClusteredCacheFactory implements CacheFactoryStrategy
     	remoteClusteredCacheNames.add(SessionManager.C2S_INFO_CACHE_NAME);
     	remoteClusteredCacheNames.add(ROSTER_CACHE_NAME);   
     	remoteClusteredCacheNames.add(ProxyConnectionManager.CLUSTER_CROSS_PROXY_MAP_CACHE_NAME);
+    	remoteClusteredCacheNames.add(LocalMUCRoomManager.LOCAL_ROOM_MANAGER_CACHE_BASE_NAME);
     }
     
     @SuppressWarnings("unchecked")
@@ -95,7 +97,7 @@ public class ClusteredCacheFactory implements CacheFactoryStrategy
 	}
 
 	@Override
-	public Cache<?,?> createCache(String name) 
+	public Cache<?,?> createCache(String name, boolean nodePurgeable) 
 	{
         // Get cache configuration from system properties or default (hardcoded) values
         long maxSize = CacheFactory.getMaxCacheSize(name);
@@ -108,11 +110,23 @@ public class ClusteredCacheFactory implements CacheFactoryStrategy
         
         if (remoteClusteredCacheNames.contains(name))
         {
-        	retVal = cacheFactory.createCache(name, maxSize, lifetime, XMPPServer.getInstance().getNodeID());
+        	retVal = cacheFactory.createCache(name, maxSize, lifetime, XMPPServer.getInstance().getNodeID(), nodePurgeable);
         }
         else
         {
-        	retVal = new DefaultCache(name, maxSize, lifetime);
+        	// the cache name could also be a substring that starts with the cache name
+        	// this is very important for MUC chat names that are create dynamically by MUC service name
+        	for (String cacheName : remoteClusteredCacheNames)
+        	{
+        		if (name.startsWith(cacheName))
+        		{
+        			retVal = cacheFactory.createCache(name, maxSize, lifetime, XMPPServer.getInstance().getNodeID(), nodePurgeable);
+        			break;
+        		}
+        	}
+        	
+        	if (retVal == null)
+        		retVal = new DefaultCache(name, maxSize, lifetime, nodePurgeable);
         }
         
         return retVal;

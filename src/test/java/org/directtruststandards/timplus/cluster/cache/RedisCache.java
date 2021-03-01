@@ -142,4 +142,10 @@ public class RedisCache implements Cache
 		
 	}
 
+	@Override
+	public boolean isNodeCachePurgeable() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
