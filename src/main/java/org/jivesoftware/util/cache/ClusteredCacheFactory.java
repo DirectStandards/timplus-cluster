@@ -24,6 +24,7 @@ import org.jivesoftware.openfire.cluster.ClusterNodeStatus;
 import org.jivesoftware.openfire.cluster.NodeID;
 import org.jivesoftware.openfire.filetransfer.proxy.ProxyConnectionManager;
 import org.jivesoftware.openfire.muc.spi.LocalMUCRoomManager;
+import org.jivesoftware.openfire.muc.spi.RemoteMUCCache;
 import org.jivesoftware.openfire.spi.RoutingTableImpl;
 import org.jivesoftware.util.JiveGlobals;
 import org.slf4j.Logger;
@@ -63,6 +64,8 @@ public class ClusteredCacheFactory implements CacheFactoryStrategy
     	remoteClusteredCacheNames.add(ROSTER_CACHE_NAME);   
     	remoteClusteredCacheNames.add(ProxyConnectionManager.CLUSTER_CROSS_PROXY_MAP_CACHE_NAME);
     	remoteClusteredCacheNames.add(LocalMUCRoomManager.LOCAL_ROOM_MANAGER_CACHE_BASE_NAME);
+    	remoteClusteredCacheNames.add(RemoteMUCCache.MUC_NICK_JID_CACHE_NAME);
+    	remoteClusteredCacheNames.add(RemoteMUCCache.MUC_OCCUPANT_CACHE_NAME);
     }
     
     @SuppressWarnings("unchecked")
